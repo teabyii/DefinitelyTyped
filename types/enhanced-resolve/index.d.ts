@@ -1,6 +1,6 @@
 // Type definitions for enhanced-resolve v3.0.0
 // Project: https://github.com/webpack/enhanced-resolve.git
-// Definitions by: e-cloud <https://github.com/e-cloud>, Onigoetz <https://github.com/onigoetz> 
+// Definitions by: e-cloud <https://github.com/e-cloud>, Onigoetz <https://github.com/onigoetz>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
 /// <reference types="node" />
@@ -14,12 +14,14 @@ import {
     AbstractInputFileSystem
 } from './lib/common-types'
 import { Dictionary } from './lib/concord'
-import Resolver = require('./lib/Resolver');
+import ImportedResolver = require('./lib/Resolver');
 import Tapable = require('tapable');
 
 declare namespace Resolve {
-    function sync(path: string, request: string): string;
-    function sync(context: ResolveContext, path: string, request: string): string;
+    type Resolver = ImportedResolver;
+
+    export function sync(path: string, request: string): string;
+    export function sync(context: ResolveContext, path: string, request: string): string;
 
     function context(path: string, request: string, callback: LoggingCallbackWrapper): void;
     function context(context: ResolveContext, path: string, request: string, callback: LoggingCallbackWrapper): void;
@@ -64,7 +66,7 @@ declare namespace Resolve {
             moduleExtensions?: string[];
             modules?: string[];
             plugins?: Tapable.Plugin[];
-            resolver?: Resolver;
+            resolver?: ImportedResolver;
             resolveToContext?: boolean;
             symlinks?: string[] | boolean;
             unsafeCache?: boolean | Dictionary<any>;
@@ -75,7 +77,7 @@ declare namespace Resolve {
             name: string;
             onlyModule?: boolean;
         }
-        function createResolver(options: ResolverOption): Resolver;
+        function createResolver(options: ResolverOption): ImportedResolver;
     }
 
     class NodeJsInputFileSystem {
